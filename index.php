@@ -1,13 +1,22 @@
-<?php 
-require_once 'layout/header.php'; 
-// 1. Latest Weddings (6)
-$weddings = $conn->query("SELECT * FROM weddings ORDER BY id DESC LIMIT 6")->fetchAll();
+<?php
+// Homepage SEO Variables (must be set BEFORE header include)
+$page_title       = "Lumos Studio | Professional Wedding Photography in Sri Lanka";
+$page_description = "Welcome to Lumos Studio — Sri Lanka's premier wedding photography studio. Explore our wedding albums, photography packages, and timeless portrait portfolio by Dinith Nishan.";
+$page_keywords    = "Lumos Studio, Lumos Studio Sri Lanka, wedding photography Sri Lanka, professional photographer, wedding photographer, portrait photography, Dinith Nishan, Mahiyanganaya photographer";
+$page_canonical   = "https://lumos.unaux.com/";
+require_once 'layout/header.php';
+// 1. Latest Albums (Exclude Baby Shoot, fetch up to 7 to check for more)
+$weddings = $conn->query("SELECT * FROM weddings WHERE category NOT IN ('Baby Shoot', 'Birthday Shoot') ORDER BY id DESC LIMIT 7")->fetchAll();
+$has_more_albums = count($weddings) > 6;
+if ($has_more_albums) {
+    array_pop($weddings);
+}
 
 // 2. Latest Testimonials (4)
 $testimonials = $conn->query("SELECT * FROM testimonials ORDER BY id DESC LIMIT 4")->fetchAll();
 
 // 3. Portfolio (Portfolio Table එකෙන් දත්ත)
-$portfolio = $conn->query("SELECT * FROM portfolio ORDER BY id DESC LIMIT 6")->fetchAll();
+$portfolio = $conn->query("SELECT * FROM portfolio ORDER BY id DESC LIMIT 10")->fetchAll();
 
 // 4. Wedding Images (For Portfolio Slideshow)
 $wedding_images = $conn->query("SELECT * FROM wedding_images ORDER BY id DESC LIMIT 10")->fetchAll();
@@ -35,6 +44,47 @@ $wedding_images = $conn->query("SELECT * FROM wedding_images ORDER BY id DESC LI
         background: rgba(0, 0, 0, 0.5);
         padding: 20px;
         border-radius: 5px;
+    }
+
+    /* ===== Mobile Responsive - Hero Section ===== */
+    @media (max-width: 767.98px) {
+        .hero-img {
+            height: 60vh;          /* mobile එකේ 60vh enough */
+            min-height: 300px;     /* minimum height එකක් */
+        }
+        .carousel-caption {
+            padding: 10px 15px;
+            bottom: 10px;
+            left: 5%;
+            right: 5%;
+        }
+        .carousel-caption h1 {
+            font-size: 1.2rem;
+            letter-spacing: 2px;
+        }
+        .carousel-caption p {
+            font-size: 0.8rem;
+            margin-bottom: 0;
+        }
+        /* Carousel arrows mobile friendly */
+        .carousel-control-prev,
+        .carousel-control-next {
+            width: 12%;
+        }
+    }
+
+    @media (max-width: 575.98px) {
+        .hero-img {
+            height: 50vh;
+            min-height: 250px;
+        }
+        .carousel-caption h1 {
+            font-size: 1rem;
+            letter-spacing: 1px;
+        }
+        .carousel-caption p {
+            font-size: 0.7rem;
+        }
     }
 
     /* Section Titles */
@@ -93,6 +143,34 @@ $wedding_images = $conn->query("SELECT * FROM wedding_images ORDER BY id DESC LI
         background-color: #fff;
         color: #000;
     }
+
+    /* Entrance / Scroll Animations */
+    .animate-in {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: opacity 0.8s ease, transform 0.8s ease;
+        will-change: opacity, transform;
+    }
+    .animate-in.visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    .animate-left {
+        transform: translateX(-40px);
+    }
+    .animate-right {
+        transform: translateX(40px);
+    }
+    .animate-left.visible,
+    .animate-right.visible {
+        transform: translateX(0);
+    }
+    .testimonial-item {
+        transition-delay: 0.15s;
+    }
+    .testimonial-item.visible {
+        transition-delay: 0s;
+    }
 </style>
 
 <!-- 1. Hero Section (Slideshow) -->
@@ -101,30 +179,30 @@ $wedding_images = $conn->query("SELECT * FROM wedding_images ORDER BY id DESC LI
         <!-- Slide 1 -->
         <div class="carousel-item ">
             <!-- පින්තූරය මෙතනට දාන්න -->
-            <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?q=80&w=1920&auto=format&fit=crop" class="d-block w-100 hero-img" alt="Wedding Image 1">
-            <div class="carousel-caption d-none d-md-block">
-                <h1 class="fw-bold">TIMELESS MEMORIES</h1>
-                <p>Capturing your beautiful moments with elegance.</p>
+            <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?q=80&w=1920&auto=format&fit=crop" class="d-block w-100 hero-img" alt="Lumos Studio - Wedding Photography Sri Lanka">
+            <div class="carousel-caption d-block">
+                <h1 class="fw-bold">WELCOME TO LUMOS STUDIO</h1>
+                <p>Professional wedding photography — capturing your timeless moments with elegance.</p>
             </div>
         </div>
         <!-- Slide 2 -->
         <div class="carousel-item">
-            <img src="https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=1920&auto=format&fit=crop" class="d-block w-100 hero-img" alt="Wedding Image 2">
-            <div class="carousel-caption d-none d-md-block">
+            <img src="https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=1920&auto=format&fit=crop" class="d-block w-100 hero-img" alt="Lumos Studio - Art of Love Wedding Photography">
+            <div class="carousel-caption d-block">
                 <h1 class="fw-bold">ART OF LOVE</h1>
-                <p>Every picture tells a story of affection.</p>
+                <p>Every picture tells a story of affection — by Lumos Studio.</p>
             </div>
         </div>
         <div class="carousel-item">
             <img src="https://images.unsplash.com/photo-1520854221256-17451cc331bf?q=80&w=1920&auto=format&fit=crop" class="d-block w-100 hero-img" alt="Wedding Image 3">
-            <div class="carousel-caption d-none d-md-block">
+            <div class="carousel-caption d-block">
                 <h1 class="fw-bold">ELEGANT STORIES</h1>
                 <p>Crafting visual stories that you will cherish forever.</p>
             </div>
         </div>
         <div class="carousel-item active">
             <img src="https://images.unsplash.com/photo-1460978812857-470ed1c77af0?q=80&w=1920&auto=format&fit=crop" class="d-block w-100 hero-img" alt="Wedding Image 4">
-            <div class="carousel-caption d-none d-md-block">
+            <div class="carousel-caption d-block">
                 <h1 class="fw-bold">TIMELESS EMOTIONS</h1>
                 <p>Preserving the true essence of your beautiful bond.</p>
             </div>
@@ -143,17 +221,17 @@ $wedding_images = $conn->query("SELECT * FROM wedding_images ORDER BY id DESC LI
 <!-- 2. Photographer Description (About Us Preview) -->
 <section class="container py-5 mt-5">
     <div class="row align-items-center">
-        <div class="col-md-5 mb-4 mb-md-0">
+        <div class="col-md-5 mb-4 mb-md-0 animate-in animate-left">
             <!-- Photographer ගේ පින්තූරය -->
             <img src="assets/about/dinith.webp" class="img-fluid" style="filter: grayscale(100%);" alt="Photographer">
         </div>
-        <div class="col-md-7 px-md-5">
-            <h2 class="section-title">Hello, I'm Dinith Nishan</h2>
+        <div class="col-md-7 px-md-5 animate-in animate-right">
+            <h2 class="section-title">Hello, I'm Dinith Nishan<br><small style="font-size:0.55em; letter-spacing:3px; opacity:0.7;">Founder & Lead Photographer, Lumos Studio</small></h2>
             <p class="lead">A professional visual storyteller based in Sri Lanka.</p>
             <p class="text-muted">
                 With over a decade of experience in wedding photography, I believe in capturing the raw, unscripted moments of your special day. My style is a blend of fine-art photography and photojournalism, presented in a timeless Black & White and natural color palette. Let's make your memories eternal.
             </p>
-            <a href="about.php" class="btn btn-theme mt-3">Read My Story</a>
+            <a href="about" class="btn btn-theme mt-3">Read My Story</a>
         </div>
     </div>
 </section>
@@ -165,18 +243,23 @@ $wedding_images = $conn->query("SELECT * FROM wedding_images ORDER BY id DESC LI
         <div class="row g-4">
             <?php foreach ($weddings as $w): ?>
             <div class="col-md-4">
-                <a href="weddings?id=<?= $w['id'] ?>" style="text-decoration: none; color: inherit;">
+                <a href="view_album?id=<?= $w['id'] ?>" style="text-decoration: none; color: inherit;">
                     <div class="album-card position-relative overflow-hidden">
                         <img src="assets/uploads/weddings/<?= $w['cover_image'] ?>" class="img-fluid w-100 album-img" alt="<?= $w['title'] ?>">
                         <div class="album-overlay d-flex flex-column justify-content-center align-items-center">
                             <h4 class="text-white text-center px-3 fw-light" style="letter-spacing: 1px;"><?= $w['title'] ?></h4>
-                            <small class="text-white-50" style="letter-spacing: 2px;">Wedding</small>
+                            <small class="text-white-50" style="letter-spacing: 2px;"><?= $w['category'] ?></small>
                         </div>
                     </div>
                 </a>
             </div>
             <?php endforeach; ?>
         </div>
+        <?php if ($has_more_albums): ?>
+        <div class="text-center mt-5">
+            <a href="albums" class="btn btn-theme px-5 py-3" style="letter-spacing: 2px;">VIEW MORE</a>
+        </div>
+        <?php endif; ?>
     </div>
 </section>
 
@@ -189,24 +272,24 @@ $wedding_images = $conn->query("SELECT * FROM wedding_images ORDER BY id DESC LI
             <div class="col-md-12 mb-5">
                 <div class="row align-items-center">
                     <?php if ($i % 2 == 0): ?>
-                        <div class="col-md-6 pe-md-5">
+                        <div class="col-md-6 pe-md-5 animate-in animate-left testimonial-item">
                             <h5 class="text-uppercase mb-3" style="letter-spacing: 2px; font-weight: 400;"><?= htmlspecialchars($t['client_name']) ?></h5>
                             <p class="text-muted" style="line-height: 2; font-size: 0.95rem;">
                                 <?= nl2br(htmlspecialchars($t['review_text'])) ?>
                             </p>
                         </div>
-                        <div class="col-md-6 text-center">
+                        <div class="col-md-6 text-center animate-in animate-right testimonial-item">
                             <?php if (!empty($t['image_path'])): ?>
                                 <img src="assets/uploads/testimonials/<?= $t['image_path'] ?>" class="img-fluid w-100" style="object-fit: cover;" alt="<?= htmlspecialchars($t['client_name']) ?>">
                             <?php endif; ?>
                         </div>
                     <?php else: ?>
-                        <div class="col-md-6 text-center order-md-1 order-2">
+                        <div class="col-md-6 text-center order-md-1 order-2 animate-in animate-left testimonial-item">
                             <?php if (!empty($t['image_path'])): ?>
                                 <img src="assets/uploads/testimonials/<?= $t['image_path'] ?>" class="img-fluid w-100" style="object-fit: cover;" alt="<?= htmlspecialchars($t['client_name']) ?>">
                             <?php endif; ?>
                         </div>
-                        <div class="col-md-6 ps-md-5 order-md-2 order-1">
+                        <div class="col-md-6 ps-md-5 order-md-2 order-1 animate-in animate-right testimonial-item">
                             <h5 class="text-uppercase mb-3" style="letter-spacing: 2px; font-weight: 400;"><?= htmlspecialchars($t['client_name']) ?></h5>
                             <p class="text-muted" style="line-height: 2; font-size: 0.95rem;">
                                 <?= nl2br(htmlspecialchars($t['review_text'])) ?>
@@ -219,7 +302,7 @@ $wedding_images = $conn->query("SELECT * FROM wedding_images ORDER BY id DESC LI
         </div>
         
         <div class="text-center mt-3 mb-2">
-            <a href="https://www.facebook.com/profile.php?id=61550491520210&sk=reviews" target="_blank" class="btn btn-outline-dark px-4 py-2" style="letter-spacing: 2px; text-transform: uppercase;">
+            <a href="https://www.facebook.com/profile.php?id=61550491520210&sk=reviews" target="_blank" rel="noopener" class="btn btn-outline-dark px-4 py-2" style="letter-spacing: 2px; text-transform: uppercase;" aria-label="Read more client reviews for Lumos Studio on Facebook">
                 Read More Reviews on Facebook
             </a>
         </div>
@@ -231,7 +314,6 @@ $wedding_images = $conn->query("SELECT * FROM wedding_images ORDER BY id DESC LI
 <!-- PORTFOLIO (Slideshow) -->
 <section class="py-5 bg-white">
     <div class="container-fluid px-0">
-        <h2 class="section-title text-center">PORTFOLIO</h2>
         
         <div class="swiper portfolioSwiper mt-4">
             <div class="swiper-wrapper">
@@ -282,6 +364,21 @@ $wedding_images = $conn->query("SELECT * FROM wedding_images ORDER BY id DESC LI
       1024: { slidesPerView: 5 },
       1440: { slidesPerView: 6 },
     },
+  });
+
+  // Animate sections on scroll
+  var animatedElements = document.querySelectorAll('.animate-in');
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.2 });
+
+  animatedElements.forEach(function(el) {
+    observer.observe(el);
   });
 </script>
 <?php 

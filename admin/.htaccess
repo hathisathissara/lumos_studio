@@ -15,7 +15,7 @@ RewriteRule ^login/?$ login.php [L]
 
 
 RewriteRule ^dashboard/?$ index.php [L]
-RewriteRule ^weddings/?$ manage_weddings.php [QSA,L]
+RewriteRule ^albums/?$ manage_albums.php [QSA,L]
 RewriteRule ^packages/?$ manage_packages.php [QSA,L]
 RewriteRule ^portfolio/?$ manage_portfolio.php [QSA,L]
 RewriteRule ^testimonials/?$ manage_testimonials.php [QSA,L]

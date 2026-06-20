@@ -182,7 +182,7 @@ document.addEventListener('submit', async function(e) {
                 const orig = submitBtn.innerHTML;
                 submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Compressing...';
                 submitBtn.disabled = true;
-                const options = { maxSizeMB: 1, maxWidthOrHeight: 1920, useWebWorker: true };
+                const options = { maxSizeMB: 0.5, maxWidthOrHeight: 1080, useWebWorker: true, fileType: 'image/webp' };
                 try {
                     for (let input of fileInputs) {
                         if (input.files.length > 0) {
@@ -191,7 +191,8 @@ document.addEventListener('submit', async function(e) {
                                 const file = input.files[i];
                                 if (file.type.startsWith('image/')) {
                                     const c = await imageCompression(file, options);
-                                    dt.items.add(new File([c], file.name, { type: file.type }));
+                                    const newName = file.name.replace(/\.[^/.]+$/, "") + ".webp";
+                                    dt.items.add(new File([c], newName, { type: 'image/webp' }));
                                 } else { dt.items.add(file); }
                             }
                             input.files = dt.files;

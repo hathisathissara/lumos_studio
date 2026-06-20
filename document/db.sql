@@ -20,7 +20,7 @@ CREATE TABLE IF NOT EXISTS slideshow_images (
 CREATE TABLE IF NOT EXISTS weddings (
     id INT AUTO_INCREMENT PRIMARY KEY,
     title VARCHAR(255) NOT NULL,
-    category ENUM('Wedding', 'Bridal Shoot', 'Engagement', 'Pre Shoot') NOT NULL,
+    category ENUM('Wedding', 'Bridal Shoot', 'Engagement', 'Pre Shoot','Baby Shoot') NOT NULL,
     cover_image VARCHAR(255) NULL,
     folder_name VARCHAR(255) NULL,
     fb_embed_code TEXT NULL,
@@ -80,3 +80,16 @@ CREATE TABLE IF NOT EXISTS contact_messages (
 INSERT INTO admin_users (username, password) 
 VALUES ('admin', '$2y$10$T1a/hHp6v5eKUis1k3J7oObB2LRTAZtVZE1ZJ5cpo2qYC.E5VWXXy')
 ON DUPLICATE KEY UPDATE username=username;
+
+
+
+ALTER TABLE weddings 
+MODIFY COLUMN category ENUM(
+    'Wedding', 
+    'Bridal Shoot', 
+    'Pre Shoot', 
+    'Baby Shoot', 
+    'Casual Shoot', 
+    'Couple Shoot', 
+    'Birthday Shoot'
+) NOT NULL;

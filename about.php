@@ -1,5 +1,9 @@
 <?php
 // about.php
+$page_title       = "About Lumos Studio | Wedding Photographers in Sri Lanka";
+$page_description = "Learn about Lumos Studio — a professional wedding photography studio in Sri Lanka founded by Dinith Nishan. We capture timeless emotions with a fine-art photojournalism style.";
+$page_keywords    = "About Lumos Studio, Dinith Nishan photographer, wedding photography Sri Lanka, Lumos Studio story, professional photographer Sri Lanka";
+$page_canonical   = "https://lumos.unaux.com/about";
 require_once 'layout/header.php';
 ?>
 

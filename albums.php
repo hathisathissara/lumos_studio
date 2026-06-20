@@ -1,10 +1,22 @@
 <?php
 
+$page_title       = "Wedding Albums | Lumos Studio Photography Sri Lanka";
+$page_description = "Browse Lumos Studio's beautiful wedding, engagement, and portrait photography albums from across Sri Lanka. Every album tells a unique love story.";
+$page_keywords    = "Lumos Studio albums, wedding albums Sri Lanka, wedding photography gallery, Lumos Studio wedding, portrait albums Sri Lanka";
+$page_canonical   = "https://lumos.unaux.com/albums";
 require_once 'layout/header.php';
 
 // Database එකෙන් සියලුම ඇල්බම් ලබා ගැනීම
 $stmt = $conn->query("SELECT * FROM weddings ORDER BY id DESC");
 $weddings = $stmt->fetchAll();
+
+// Extract unique categories for filter buttons
+$categories = [];
+foreach ($weddings as $w) {
+    if (!empty($w['category']) && !in_array($w['category'], $categories)) {
+        $categories[] = $w['category'];
+    }
+}
 ?>
 
 <style>
@@ -74,15 +86,63 @@ $weddings = $stmt->fetchAll();
         letter-spacing: 3px;
         font-weight: 300;
     }
+
+    /* Filter Buttons Styling */
+    .filter-btn-group {
+        margin-bottom: 40px;
+    }
+    .filter-btn {
+        background: transparent;
+        border: none;
+        font-family: 'Times New Roman', serif;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        font-size: 0.9rem;
+        margin: 0 10px;
+        padding: 5px 10px;
+        color: #777;
+        transition: color 0.3s ease;
+        position: relative;
+    }
+    .filter-btn:focus {
+        outline: none;
+        box-shadow: none;
+    }
+    .filter-btn:hover, .filter-btn.active {
+        color: #000;
+    }
+    .filter-btn::after {
+        content: '';
+        position: absolute;
+        width: 0;
+        height: 1px;
+        background: #000;
+        bottom: 0;
+        left: 50%;
+        transition: all 0.3s ease;
+        transform: translateX(-50%);
+    }
+    .filter-btn:hover::after, .filter-btn.active::after {
+        width: 100%;
+    }
 </style>
 
 <div class="container pb-5" style="padding-top: 140px;">
-    <h1 class="page-title">ALBUMS</h1>
+    <h1 class="page-title">ALBUMS<br><small style="font-size:0.5em; letter-spacing:3px; opacity:0.6;">by Lumos Studio</small></h1>
 
-    <div class="row">
+    <?php if(count($weddings) > 0 && count($categories) > 0): ?>
+    <div class="filter-btn-group text-center">
+        <button class="btn filter-btn active" data-filter="all">ALL</button>
+        <?php foreach($categories as $cat): ?>
+            <button class="btn filter-btn" data-filter="<?= htmlspecialchars($cat) ?>"><?= strtoupper(htmlspecialchars($cat)) ?></button>
+        <?php endforeach; ?>
+    </div>
+    <?php endif; ?>
+
+    <div class="row" id="albums-container">
         <?php if(count($weddings) > 0): ?>
             <?php foreach ($weddings as $w): ?>
-                <div class="col-md-4 col-sm-6">
+                <div class="col-md-4 col-sm-6 album-item" data-category="<?= htmlspecialchars($w['category']) ?>">
                     <!-- ඇල්බමය ක්ලික් කළ විට view_album.php පිටුවට යොමු වේ -->
                     <a href="view_album?id=<?= $w['id'] ?>" class="album-box">
                         <img src="assets/uploads/weddings/<?= $w['cover_image'] ?>" alt="<?= htmlspecialchars($w['title']) ?>" class="album-img">
@@ -100,5 +160,31 @@ $weddings = $stmt->fetchAll();
         <?php endif; ?>
     </div>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const albumItems = document.querySelectorAll('.album-item');
+
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            // Remove active class from all buttons
+            filterBtns.forEach(b => b.classList.remove('active'));
+            // Add active class to clicked button
+            this.classList.add('active');
+
+            const filterValue = this.getAttribute('data-filter');
+
+            albumItems.forEach(item => {
+                if (filterValue === 'all' || item.getAttribute('data-category') === filterValue) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        });
+    });
+});
+</script>
 
 <?php require_once 'layout/footer.php'; ?>

@@ -13,7 +13,7 @@ php_value max_file_uploads 50
 
 RewriteRule ^/?$ index.php [L]
 RewriteRule ^home/?$ index.php [L]
-RewriteRule ^weddings/?$ weddings.php [L]
+RewriteRule ^albums/?$ albums.php [L]
 RewriteRule ^packages/?$ packages.php [L]
 RewriteRule ^portfolio/?$ portfolio.php [L]
 RewriteRule ^about/?$ about.php [L]

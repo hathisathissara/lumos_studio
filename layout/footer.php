@@ -13,13 +13,13 @@
         <div class="mb-4">
             <a href="https://www.facebook.com/profile.php?id=61550491520210" class="text-dark mx-3 fs-5"><i class="fa-brands fa-square-facebook"></i></a>
             <a href="https://www.tiktok.com/@lumosstudio.lk?lang=en" class="text-dark mx-3 fs-5"><i class="fa-brands fa-tiktok"></i></a>
-            <a href="https://api.whatsapp.com/send?phone=94701376989&text=Hello%2C%20I%20would%20like%20to%20make%20a%20booking%20for%20your%20Wedding%20Photography%20service.%20Please%20share%20the%20available%20packages%20and%20pricing%20details." class="text-dark mx-3 fs-5"><i class="fa-brands fa-whatsapp"></i></a>
+            <a href="https://api.whatsapp.com/send?phone=94758385027&text=Hello%2C%20I%20would%20like%20to%20make%20a%20booking%20for%20your%20Wedding%20Photography%20service.%20Please%20share%20the%20available%20packages%20and%20pricing%20details." class="text-dark mx-3 fs-5"><i class="fa-brands fa-whatsapp"></i></a>
         </div>
 
         <!-- Navigation Links -->
         <div class="mb-4" style="font-family: sans-serif; font-size: 14px;">
             <a href="home" class="text-dark text-decoration-none mx-3">Home</a>
-            <a href="weddings" class="text-dark text-decoration-none mx-3">Weddings</a>
+            <a href="albums" class="text-dark text-decoration-none mx-3">Albums</a>
             <a href="about" class="text-dark text-decoration-none mx-3">About Us</a>
             <a href="contact" class="text-dark text-decoration-none mx-3">Contact</a>
         </div>

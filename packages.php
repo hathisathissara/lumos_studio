@@ -1,5 +1,9 @@
 <?php
 
+$page_title       = "Photography Packages & Pricing | Lumos Studio Sri Lanka";
+$page_description = "Explore Lumos Studio's photography packages and pricing for weddings, engagements, and special events in Sri Lanka. Find the perfect package for your beautiful day.";
+$page_keywords    = "Lumos Studio packages, wedding photography pricing Sri Lanka, photography packages, Lumos Studio pricing, wedding photographer packages Sri Lanka";
+$page_canonical   = "https://lumos.unaux.com/packages";
 require_once 'layout/header.php';
 
 $stmt = $conn->query("SELECT * FROM packages ORDER BY id ASC");
@@ -9,7 +13,7 @@ $middle_index = floor($total / 2);
 ?>
 
 <style>
-    body { background-color: #ffffff; color: #333; }
+    body { background-color: #fafafa; color: #333; }
 
     .page-title {
         font-weight: 300;
@@ -20,28 +24,28 @@ $middle_index = floor($total / 2);
         font-family: 'Times New Roman', serif;
     }
 
-    .pricing-wrapper {
-        display: flex;
-        align-items: stretch;
-        justify-content: center;
-        gap: 0;
-        flex-wrap: nowrap;
-        overflow-x: auto;
+    /* ── Grid Layout ── */
+    .pricing-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 30px;
+        padding: 0 20px;
+        max-width: 1400px;
+        margin: 0 auto;
     }
 
     .pricing-col {
-        flex: 1;
-        min-width: 260px;
-        max-width: 340px;
-        border: 1px solid #e0e0e0;
         background: #fff;
+        border: 1px solid #e8e8e8;
         display: flex;
         flex-direction: column;
-        transition: box-shadow 0.3s ease;
         position: relative;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        overflow: hidden;
     }
     .pricing-col:hover {
-        box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+        transform: translateY(-6px);
+        box-shadow: 0 20px 50px rgba(0,0,0,0.10);
         z-index: 1;
     }
 
@@ -49,51 +53,57 @@ $middle_index = floor($total / 2);
         background: #111;
         color: #fff;
         border-color: #111;
-        transform: scaleY(1.03);
-        z-index: 2;
-        box-shadow: 0 20px 60px rgba(0,0,0,0.18);
+        box-shadow: 0 15px 45px rgba(0,0,0,0.20);
+    }
+    .pricing-col.featured:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 25px 60px rgba(0,0,0,0.28);
     }
 
     .popular-badge {
         position: absolute;
-        top: -1px;
-        left: 50%;
-        transform: translateX(-50%);
+        top: 0;
+        right: 0;
         background: #c9a84c;
         color: #fff;
-        font-size: 0.7rem;
+        font-size: 0.68rem;
         letter-spacing: 3px;
         text-transform: uppercase;
-        padding: 5px 20px;
+        padding: 6px 18px;
         white-space: nowrap;
     }
 
     .pricing-img {
         width: 100%;
-        height: 200px;
+        height: 210px;
         object-fit: cover;
         filter: grayscale(15%);
         display: block;
+        transition: filter 0.4s ease, transform 0.4s ease;
     }
+    .pricing-col:hover .pricing-img { filter: grayscale(0%); transform: scale(1.03); }
     .pricing-col.featured .pricing-img { filter: grayscale(0%); }
+    .pricing-img-wrap {
+        overflow: hidden;
+    }
 
     .pricing-header {
-        padding: 30px 30px 20px;
-        border-bottom: 1px solid #e0e0e0;
+        padding: 25px 28px 18px;
+        border-bottom: 1px solid #ebebeb;
         text-align: center;
     }
-    .pricing-col.featured .pricing-header { border-bottom-color: #333; }
+    .pricing-col.featured .pricing-header { border-bottom-color: #2a2a2a; }
 
     .pricing-name {
         font-family: 'Times New Roman', serif;
-        font-size: 1.5rem;
+        font-size: 1.45rem;
         font-weight: 400;
         letter-spacing: 2px;
-        margin-bottom: 12px;
+        margin-bottom: 10px;
     }
 
     .pricing-price {
-        font-size: 1.8rem;
+        font-size: 1.75rem;
         font-weight: 600;
         letter-spacing: 1px;
         color: #111;
@@ -102,14 +112,14 @@ $middle_index = floor($total / 2);
 
     /* Features Preview Area */
     .pricing-features-preview {
-        padding: 20px 30px;
+        padding: 18px 28px;
         flex-grow: 1;
     }
     .feature-preview-item {
-        font-size: 0.88rem;
+        font-size: 0.87rem;
         color: #555;
-        padding: 7px 0;
-        border-bottom: 1px solid #f0f0f0;
+        padding: 8px 0;
+        border-bottom: 1px solid #f2f2f2;
         display: flex;
         align-items: center;
         gap: 10px;
@@ -120,16 +130,15 @@ $middle_index = floor($total / 2);
     }
     .feature-preview-item::before {
         content: "—";
-        color: #999;
+        color: #c9a84c;
         flex-shrink: 0;
     }
-    .pricing-col.featured .feature-preview-item::before { color: #c9a84c; }
 
     /* View All Button */
     .btn-view-features {
         display: block;
-        width: calc(100% - 60px);
-        margin: 0 30px 20px;
+        width: calc(100% - 56px);
+        margin: 0 28px 18px;
         border: 1px dashed #ccc;
         background: transparent;
         color: #888;
@@ -147,14 +156,14 @@ $middle_index = floor($total / 2);
     }
     .pricing-col.featured .btn-view-features {
         border-color: #333;
-        color: #888;
+        color: #777;
     }
     .pricing-col.featured .btn-view-features:hover {
         border-color: #c9a84c;
         color: #c9a84c;
     }
 
-    .pricing-footer { padding: 10px 30px 25px; }
+    .pricing-footer { padding: 8px 28px 24px; }
 
     .btn-inquire {
         display: block;
@@ -248,26 +257,27 @@ $middle_index = floor($total / 2);
     }
     .modal-inquire-btn:hover { background: #000; color: #fff; }
 
-    @media (max-width: 768px) {
-        .pricing-wrapper { flex-direction: column; align-items: center; }
-        .pricing-col { max-width: 100%; width: 100%; }
-        .pricing-col.featured { transform: none; order: -1; }
+    @media (max-width: 900px) {
+        .pricing-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 576px) {
+        .pricing-grid { grid-template-columns: 1fr; gap: 20px; }
     }
 </style>
 
 <div class="container-fluid pb-5" style="padding-top: 140px;">
-    <h1 class="page-title">INVESTMENT & PACKAGES</h1>
+    <h1 class="page-title">INVESTMENT &amp; PACKAGES<br><small style="font-size:0.5em; letter-spacing:3px; opacity:0.6;">Lumos Studio &mdash; Sri Lanka</small></h1>
     <p class="text-center text-muted mb-5" style="letter-spacing: 1px; font-weight: 300;">
         Choose the perfect package to preserve your beautiful day forever.
     </p>
 
     <?php if($total > 0): ?>
-        <div class="pricing-wrapper px-3">
+        <div class="pricing-grid">
             <?php foreach ($packages as $i => $p): ?>
                 <?php
                     $is_featured = ($i === $middle_index);
                     $features = array_filter(array_map('trim', explode("\n", $p['description'])));
-                    $preview_features = array_slice($features, 0, 3); // පළමු features 3 පෙන්වයි
+                    $preview_features = array_slice($features, 0, 3);
                     $modal_id = "featuresModal" . $p['id'];
                 ?>
                 <div class="pricing-col <?= $is_featured ? 'featured' : '' ?>">
@@ -311,7 +321,7 @@ $middle_index = floor($total / 2);
 
                     <!-- Inquire Button -->
                     <div class="pricing-footer">
-                        <a href="contact.php?package=<?= urlencode($p['package_name']) ?>"
+                        <a href="contact?package=<?= urlencode($p['package_name']) ?>"
                            class="btn-inquire">Inquire Now</a>
                     </div>
                 </div>
@@ -334,7 +344,7 @@ $middle_index = floor($total / 2);
                                         </li>
                                     <?php endforeach; ?>
                                 </ul>
-                                <a href="contact.php?package=<?= urlencode($p['package_name']) ?>"
+                                <a href="contact?package=<?= urlencode($p['package_name']) ?>"
                                    class="modal-inquire-btn">Inquire Now</a>
                             </div>
                         </div>

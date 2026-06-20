@@ -1,5 +1,9 @@
 <?php
 
+$page_title       = "Contact Lumos Studio | Book Your Wedding Photographer in Sri Lanka";
+$page_description = "Get in touch with Lumos Studio to book your wedding photography session in Sri Lanka. Fill out our inquiry form or contact us directly via WhatsApp or email.";
+$page_keywords    = "Contact Lumos Studio, book wedding photographer Sri Lanka, Lumos Studio contact, wedding photography booking, Lumos Studio inquiry";
+$page_canonical   = "https://lumos.unaux.com/contact";
 require_once 'layout/header.php';
 
 $success_msg = "";
@@ -104,6 +108,7 @@ if (isset($_GET['package'])) {
 
 <div class="container pb-5" style="padding-top: 140px;">
     <h1 class="page-title">CONTACT US</h1>
+    <p class="text-center text-muted mb-2" style="letter-spacing: 2px; font-size: 0.75rem; text-transform: uppercase;">Lumos Studio &mdash; Wedding Photography Sri Lanka</p>
     <p class="text-center text-muted mb-5" style="letter-spacing: 1px; font-weight: 300;">Let's discuss and craft your beautiful story together.</p>
 
     <div class="row justify-content-center">
@@ -119,7 +124,7 @@ if (isset($_GET['package'])) {
                     <div class="alert alert-danger border-0 rounded-0 py-3 mb-4"><?= $error_msg ?></div>
                 <?php endif; ?>
 
-                <form action="contact.php" method="POST">
+                <form action="contact" method="POST">
                     <div class="row">
                         <!-- Name -->
                         <div class="col-md-6 mb-3">

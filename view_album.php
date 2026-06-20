@@ -123,7 +123,7 @@ if (!$album) {
     </div>
 
     <div class="text-center mt-5">
-        <a href="weddings" class="btn btn-dark px-4 py-2">&larr; Back to Albums</a>
+        <a href="albums" class="btn btn-dark px-4 py-2">&larr; Back to Albums</a>
     </div>
 </div>
 

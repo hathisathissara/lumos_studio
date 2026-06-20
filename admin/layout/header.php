@@ -387,7 +387,7 @@ $currentPage = basename($_SERVER['PHP_SELF'], '.php');
 
 $pageTitles = [
     'index'               => ['Dashboard',    'Overview of your studio'],
-    'manage_weddings'     => ['Weddings',     'Manage wedding albums'],
+    'manage_albums'     => ['Albums',     'Manage albums'],
     'manage_packages'     => ['Packages',     'Manage pricing & packages'],
     'manage_portfolio'    => ['Portfolio',    'Manage photo gallery'],
     'manage_testimonials' => ['Testimonials', 'Manage client reviews'],
@@ -416,9 +416,9 @@ if (isset($_SESSION['admin_logged_in'])): ?>
             </a>
 
             <span class="nav-label">Content</span>
-            <a href="weddings" class="sidebar-link <?= $currentPage == 'manage_weddings' ? 'active' : '' ?>">
+            <a href="albums" class="sidebar-link <?= $currentPage == 'manage_albums' ? 'active' : '' ?>">
                 <span class="nav-icon"><i class="fa-solid fa-ring"></i></span>
-                Weddings
+                Albums
             </a>
             <a href="packages" class="sidebar-link <?= $currentPage == 'manage_packages' ? 'active' : '' ?>">
                 <span class="nav-icon"><i class="fa-solid fa-box-open"></i></span>

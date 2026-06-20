@@ -102,7 +102,7 @@ try {
 <!-- Stat Cards -->
 <div class="row g-3 mb-4">
     <div class="col-6 col-md-4 col-lg-2-4">
-        <a href="weddings" class="stat-card">
+        <a href="albums" class="stat-card">
             <div class="stat-icon" style="background:rgba(99,102,241,0.15); color:var(--accent-2);">
                 <i class="fa-solid fa-ring"></i>
             </div>
@@ -168,9 +168,9 @@ try {
     <h5 style="font-size:0.82rem; text-transform:uppercase; letter-spacing:0.08em; color:var(--text-muted); margin-bottom:1rem;">Quick Actions</h5>
     <div class="row g-3">
         <div class="col-6 col-md-4 col-lg">
-            <a href="weddings" class="action-card ac-indigo">
+            <a href="albums" class="action-card ac-indigo">
                 <div class="action-icon"><i class="fa-solid fa-ring"></i></div>
-                <span class="action-label">Weddings</span>
+                <span class="action-label">Albums</span>
             </a>
         </div>
         <div class="col-6 col-md-4 col-lg">

@@ -238,7 +238,7 @@ form.addEventListener('submit', async function(e) {
     progressModal.show();
     const progressText = document.getElementById('progressText');
     const progressBar  = document.getElementById('progressBar');
-    const options = { maxSizeMB: 1, maxWidthOrHeight: 1920, useWebWorker: true };
+    const options = { maxSizeMB: 1, maxWidthOrHeight: 1920, useWebWorker: true, fileType: 'image/webp' };
     const compressedFiles = [];
 
     for (let i = 0; i < files.length; i++) {
@@ -253,7 +253,10 @@ form.addEventListener('submit', async function(e) {
 
     const formData = new FormData(form);
     formData.delete('images[]');
-    compressedFiles.forEach((f, i) => formData.append('images[]', f, files[i].name));
+    compressedFiles.forEach((f, i) => {
+        const newName = f === files[i] ? files[i].name : files[i].name.replace(/\.[^/.]+$/, "") + ".webp";
+        formData.append('images[]', f, newName);
+    });
 
     const xhr = new XMLHttpRequest();
     xhr.open('POST', 'manage_portfolio.php', true);

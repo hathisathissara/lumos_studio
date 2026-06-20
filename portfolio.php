@@ -1,6 +1,10 @@
 <?php
 // portfolio.php
 
+$page_title       = "Photography Portfolio | Lumos Studio Sri Lanka";
+$page_description = "Explore Lumos Studio's photography portfolio showcasing wedding, portrait, and event photography from across Sri Lanka. Every image is a timeless story.";
+$page_keywords    = "Lumos Studio portfolio, wedding photography portfolio, portrait photography Sri Lanka, Lumos Studio gallery, professional photography portfolio";
+$page_canonical   = "https://lumos.unaux.com/portfolio";
 require_once 'layout/header.php';
 
 // Database එකෙන් සියලුම Portfolio පින්තූර ලබා ගැනීම
@@ -71,9 +75,44 @@ $portfolio = $stmt->fetchAll();
         display: block;
         transition: transform 0.5s ease;
     }
+
+    .portfolio-item .portfolio-caption {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        background: rgba(0, 0, 0, 0.65);
+        color: #ffffff;
+        padding: 16px;
+        opacity: 0;
+        transform: scale(0.98);
+        transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+
+    .portfolio-item:hover .portfolio-caption {
+        opacity: 1;
+        transform: scale(1);
+    }
     
     .portfolio-item:hover img {
         transform: scale(1.03); /* Hover කරද්දී පින්තූරය සෙමින් ලොකු වේ */
+    }
+    
+    .portfolio-item .portfolio-caption .caption-category {
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 3px;
+        margin-bottom: 10px;
+        font-size: 0.85rem;
+        color: #f7d794;
+    }
+
+    .portfolio-item .portfolio-caption .caption-title {
+        font-size: 1rem;
+        font-weight: 500;
     }
     
     /* Responsive Layouts */
@@ -86,7 +125,7 @@ $portfolio = $stmt->fetchAll();
 </style>
 
 <div class="container pb-5" style="padding-top: 140px;">
-    <h1 class="page-title">PORTFOLIO</h1>
+    <h1 class="page-title">PORTFOLIO<br><small style="font-size:0.5em; letter-spacing:3px; opacity:0.6;">Lumos Studio</small></h1>
     
     <!-- Filter Buttons (පිටුව reload නොවී වැඩ කරන filter එක) -->
     <div class="filter-container">
@@ -103,6 +142,10 @@ $portfolio = $stmt->fetchAll();
                 <div class="portfolio-item" data-category="<?= htmlspecialchars($p['category']) ?>">
                     <a data-fslightbox="gallery" href="assets/uploads/portfolio/<?= htmlspecialchars($p['image_path']) ?>">
                         <img src="assets/uploads/portfolio/<?= htmlspecialchars($p['image_path']) ?>" alt="<?= htmlspecialchars($p['title']) ?>" style="cursor: pointer;">
+                        <div class="portfolio-caption">
+                            <div class="caption-category"><?= htmlspecialchars($p['category']) ?></div>
+                            <div class="caption-title"><?= htmlspecialchars($p['title']) ?></div>
+                        </div>
                     </a>
                 </div>
             <?php endforeach; ?>
