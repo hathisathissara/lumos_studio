@@ -56,6 +56,14 @@ if (isset($_POST['edit_wedding'])) {
     $is_embed = $_POST['is_embed'];
     
     if (!empty($_FILES['cover_image']['name'])) {
+        $stmt = $conn->prepare("SELECT cover_image FROM weddings WHERE id = ?");
+        $stmt->execute([$id]);
+        $old_wedding = $stmt->fetch();
+        if ($old_wedding && !empty($old_wedding['cover_image'])) {
+            $old_cover_path = $upload_dir . $old_wedding['cover_image'];
+            if (file_exists($old_cover_path)) unlink($old_cover_path);
+        }
+
         $cover_image = uniqid('cover_') . "_" . $_FILES['cover_image']['name'];
         move_uploaded_file($_FILES['cover_image']['tmp_name'], $upload_dir . $cover_image);
         $stmt = $conn->prepare("UPDATE weddings SET title = ?, category = ?, is_embed = ?, cover_image = ? WHERE id = ?");
