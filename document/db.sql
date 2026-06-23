@@ -75,12 +75,6 @@ CREATE TABLE IF NOT EXISTS contact_messages (
     sent_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- 10. Default Admin කෙනෙක් සාදා දත්ත ඇතුළත් කිරීම 
--- Username: admin | Password: admin123 (මෙහි පාස්වර්ඩ් එක ආරක්ෂිතව Bcrypt මගින් hash කර ඇත)
-INSERT INTO admin_users (username, password) 
-VALUES ('admin', '$2y$10$T1a/hHp6v5eKUis1k3J7oObB2LRTAZtVZE1ZJ5cpo2qYC.E5VWXXy')
-ON DUPLICATE KEY UPDATE username=username;
-
 
 
 ALTER TABLE weddings 
