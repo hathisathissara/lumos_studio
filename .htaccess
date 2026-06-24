@@ -22,6 +22,7 @@ RewriteRule ^login/?$ admin/login.php [L]
 RewriteRule ^admin/?$ admin/dashboard.php [L]
 RewriteRule ^view_album/?$ view_album.php [L]
 RewriteRule ^view_album/([0-9]+)/?$ view_album.php?id=$1 [L]
+RewriteRule ^albums/([a-zA-Z0-9-]+)/?$ view_album.php?slug=$1 [L]
 
 
 

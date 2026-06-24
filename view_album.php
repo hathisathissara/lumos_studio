@@ -1,20 +1,42 @@
 <?php
-require_once 'layout/header.php';
+require_once './config/config.php';
 
-// URL එකෙන් id එක ලබා ගැනීම
-$album_id = isset($_GET['id']) ? $_GET['id'] : 0;
+$album_slug = isset($_GET['slug']) ? $_GET['slug'] : '';
+$album_id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
 
-// ඇල්බම් එකේ විස්තර ලබා ගැනීම
-$stmt = $conn->prepare("SELECT * FROM weddings WHERE id = ?");
-$stmt->execute([$album_id]);
+if ($album_slug) {
+    $stmt = $conn->prepare("SELECT * FROM weddings WHERE slug = ?");
+    $stmt->execute([$album_slug]);
+} else {
+    $stmt = $conn->prepare("SELECT * FROM weddings WHERE id = ?");
+    $stmt->execute([$album_id]);
+}
 $album = $stmt->fetch();
 
-// ඇල්බම් එක නැත්නම් Error එකක් පෙන්වීම
 if (!$album) {
-    echo "<div class='container py-5 text-center mt-5'><h2>Album Not Found!</h2><a href='weddings.php' class='btn btn-dark mt-3'>Back to Albums</a></div>";
+    require_once 'layout/header.php';
+    echo "<div class='container py-5 text-center mt-5'><h2>Album Not Found!</h2><a href='albums' class='btn btn-dark mt-3'>Back to Albums</a></div>";
     require_once 'layout/footer.php';
     exit();
 }
+
+$album_id = $album['id'];
+
+// Setup Dynamic SEO Meta Tags
+$page_title = htmlspecialchars($album['title'] . " | Lumos Studio");
+$page_description = "Explore the beautiful " . strtolower($album['category']) . " of " . $album['title'] . " by Lumos Studio. Professional portrait and lifestyle photography in Sri Lanka.";
+if (!empty($album['description'])) {
+    $page_description = strip_tags($album['description']);
+}
+$page_keywords = $album['title'] . ", " . $album['category'] . ", Lumos Studio, Photography, Sri Lanka";
+$page_canonical = "https://lumos.unaux.com/albums/" . (!empty($album['slug']) ? $album['slug'] : $album_id);
+
+if (!empty($album['cover_image'])) {
+    $page_og_image = "https://lumos.unaux.com/assets/uploads/weddings/" . $album['cover_image'];
+}
+
+// Now include header
+require_once 'layout/header.php';
 ?>
 
 <style>
@@ -72,8 +94,12 @@ if (!$album) {
 <div class="container mt-4 mb-5">
     <!-- Album Title Section -->
     <div class="album-header">
-        <h1 class="album-title"><?= htmlspecialchars($album['title']) ?></h1>
-        <div class="album-category mt-2"><?= htmlspecialchars($album['category']) ?></div>
+        <h1 class="album-title"><?= htmlspecialchars($album['title']) ?> &ndash; <?= htmlspecialchars(strtoupper($album['category'])) ?></h1>
+        <?php if (!empty($album['description'])): ?>
+            <p class="mt-4 text-muted" style="max-width: 800px; margin: 0 auto; line-height: 1.8;"><?= nl2br(htmlspecialchars($album['description'])) ?></p>
+        <?php else: ?>
+            <div class="album-category mt-2"><?= htmlspecialchars($album['category']) ?></div>
+        <?php endif; ?>
     </div>
 
     <!-- Album Content -->
@@ -109,7 +135,7 @@ if (!$album) {
                     <div class="image-grid">
                         <?php foreach ($images as $img): ?>
                             <a data-fslightbox="gallery" href="assets/uploads/weddings/<?= htmlspecialchars($img['image_path']) ?>">
-                                <img src="assets/uploads/weddings/<?= htmlspecialchars($img['image_path']) ?>" alt="Wedding Image">
+                                <img src="assets/uploads/weddings/<?= htmlspecialchars($img['image_path']) ?>" alt="<?= htmlspecialchars($album['title']) ?> <?= htmlspecialchars($album['category']) ?> by Lumos Studio Sri Lanka">
                             </a>
                         <?php endforeach; ?>
                     </div>

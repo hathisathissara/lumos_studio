@@ -13,6 +13,14 @@ if (!isset($page_og_image))    $page_og_image    = "https://lumos.unaux.com/asse
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <?php
+    $protocol = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') ? "https" : "http";
+    $host = $_SERVER['HTTP_HOST'];
+    $base_path = rtrim(dirname($_SERVER['SCRIPT_NAME']), '/\\') . '/';
+    $base_url = $protocol . "://" . $host . $base_path;
+    ?>
+    <base href="<?php echo htmlspecialchars($base_url); ?>">
+    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     

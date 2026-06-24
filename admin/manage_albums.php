@@ -16,11 +16,25 @@ function extractFbSrc($input) {
     return $input;
 }
 
+function createSlug($string, $conn, $id = 0) {
+    $slug = preg_replace('/[^a-zA-Z0-9-]/', '-', strtolower(trim($string)));
+    $slug = preg_replace('/-+/', '-', $slug);
+    $slug = trim($slug, '-');
+    $check = $conn->prepare("SELECT COUNT(*) FROM weddings WHERE slug = ? AND id != ?");
+    $check->execute([$slug, $id]);
+    if ($check->fetchColumn() > 0) {
+        $slug .= '-' . time();
+    }
+    return $slug;
+}
+
 // Add Wedding
 if (isset($_POST['add_wedding'])) {
-    $title     = $_POST['title'];
-    $category  = $_POST['category'];
-    $is_embed  = $_POST['is_embed'];
+    $title       = $_POST['title'];
+    $category    = $_POST['category'];
+    $description = $_POST['description'] ?? '';
+    $is_embed    = $_POST['is_embed'];
+    $slug        = createSlug($title, $conn);
     $cover_image = "";
     if ($_FILES['cover_image']['name']) {
         $cover_image = uniqid('cover_') . "_" . $_FILES['cover_image']['name'];
@@ -28,11 +42,11 @@ if (isset($_POST['add_wedding'])) {
     }
     if ($is_embed == '1') {
         $fb_code = extractFbSrc($_POST['fb_code']);
-        $stmt = $conn->prepare("INSERT INTO weddings (title, category, cover_image, fb_embed_code, is_embed) VALUES (?, ?, ?, ?, 1)");
-        $stmt->execute([$title, $category, $cover_image, $fb_code]);
+        $stmt = $conn->prepare("INSERT INTO weddings (title, slug, category, description, cover_image, fb_embed_code, is_embed) VALUES (?, ?, ?, ?, ?, ?, 1)");
+        $stmt->execute([$title, $slug, $category, $description, $cover_image, $fb_code]);
     } else {
-        $stmt = $conn->prepare("INSERT INTO weddings (title, category, cover_image, is_embed) VALUES (?, ?, ?, 0)");
-        $stmt->execute([$title, $category, $cover_image]);
+        $stmt = $conn->prepare("INSERT INTO weddings (title, slug, category, description, cover_image, is_embed) VALUES (?, ?, ?, ?, ?, 0)");
+        $stmt->execute([$title, $slug, $category, $description, $cover_image]);
         $wedding_id = $conn->lastInsertId();
         if (!empty($_FILES['album_images']['name'][0])) {
             foreach ($_FILES['album_images']['tmp_name'] as $key => $tmp_name) {
@@ -53,7 +67,9 @@ if (isset($_POST['edit_wedding'])) {
     $id = $_POST['wedding_id'];
     $title = $_POST['title'];
     $category = $_POST['category'];
+    $description = $_POST['description'] ?? '';
     $is_embed = $_POST['is_embed'];
+    $slug = createSlug($title, $conn, $id);
     
     if (!empty($_FILES['cover_image']['name'])) {
         $stmt = $conn->prepare("SELECT cover_image FROM weddings WHERE id = ?");
@@ -66,11 +82,11 @@ if (isset($_POST['edit_wedding'])) {
 
         $cover_image = uniqid('cover_') . "_" . $_FILES['cover_image']['name'];
         move_uploaded_file($_FILES['cover_image']['tmp_name'], $upload_dir . $cover_image);
-        $stmt = $conn->prepare("UPDATE weddings SET title = ?, category = ?, is_embed = ?, cover_image = ? WHERE id = ?");
-        $stmt->execute([$title, $category, $is_embed, $cover_image, $id]);
+        $stmt = $conn->prepare("UPDATE weddings SET title = ?, slug = ?, category = ?, description = ?, is_embed = ?, cover_image = ? WHERE id = ?");
+        $stmt->execute([$title, $slug, $category, $description, $is_embed, $cover_image, $id]);
     } else {
-        $stmt = $conn->prepare("UPDATE weddings SET title = ?, category = ?, is_embed = ? WHERE id = ?");
-        $stmt->execute([$title, $category, $is_embed, $id]);
+        $stmt = $conn->prepare("UPDATE weddings SET title = ?, slug = ?, category = ?, description = ?, is_embed = ? WHERE id = ?");
+        $stmt->execute([$title, $slug, $category, $description, $is_embed, $id]);
     }
     
     if ($is_embed == '1') {
@@ -294,6 +310,10 @@ $weddings = $conn->query("SELECT * FROM weddings ORDER BY id DESC")->fetchAll();
                     </select>
                 </div>
                 <div class="mb-3">
+                    <label class="form-label">Description (For SEO & Display)</label>
+                    <textarea name="description" class="form-control" rows="3" placeholder="Add a short description about the location, vibe, and style of the shoot for better SEO..."></textarea>
+                </div>
+                <div class="mb-3">
                     <label class="form-label">Cover Image</label>
                     <input type="file" name="cover_image" class="form-control" required>
                 </div>
@@ -350,6 +370,10 @@ $weddings = $conn->query("SELECT * FROM weddings ORDER BY id DESC")->fetchAll();
                             <option value="Birthday Shoot">Birthday Shoot</option>
                         </select>
                     </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Description (For SEO & Display)</label>
+                    <textarea name="description" id="edit_description" class="form-control" rows="3"></textarea>
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Cover Image <span class="text-muted" style="font-size:0.8rem;">(Leave empty to keep current)</span></label>
@@ -488,6 +512,7 @@ function openEditModal(id) {
         document.getElementById('edit_wedding_id').value = data.id;
         document.getElementById('edit_title').value = data.title;
         document.getElementById('edit_category').value = data.category;
+        document.getElementById('edit_description').value = data.description || '';
         document.getElementById('edit_typeSelect').value = data.is_embed;
         document.getElementById('edit_fb_code').value = data.fb_embed_code || '';
         toggleEditType();

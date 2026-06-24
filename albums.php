@@ -144,8 +144,8 @@ foreach ($weddings as $w) {
             <?php foreach ($weddings as $w): ?>
                 <div class="col-md-4 col-sm-6 album-item" data-category="<?= htmlspecialchars($w['category']) ?>">
                     <!-- ඇල්බමය ක්ලික් කළ විට view_album.php පිටුවට යොමු වේ -->
-                    <a href="view_album?id=<?= $w['id'] ?>" class="album-box">
-                        <img src="assets/uploads/weddings/<?= $w['cover_image'] ?>" alt="<?= htmlspecialchars($w['title']) ?>" class="album-img">
+                    <a href="albums/<?= !empty($w['slug']) ? htmlspecialchars($w['slug']) : $w['id'] ?>" class="album-box">
+                        <img src="assets/uploads/weddings/<?= $w['cover_image'] ?>" alt="<?= htmlspecialchars($w['title']) ?> <?= htmlspecialchars($w['category']) ?> album by Lumos Studio" class="album-img">
                         <div class="album-overlay">
                             <h3 class="album-title"><?= htmlspecialchars($w['title']) ?></h3>
                             <span class="album-category"><?= htmlspecialchars($w['category']) ?></span>

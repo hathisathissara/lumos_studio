@@ -243,7 +243,7 @@ $wedding_images = $conn->query("SELECT * FROM wedding_images ORDER BY id DESC LI
         <div class="row g-4">
             <?php foreach ($weddings as $w): ?>
             <div class="col-md-4">
-                <a href="view_album?id=<?= $w['id'] ?>" style="text-decoration: none; color: inherit;">
+                <a href="albums/<?= !empty($w['slug']) ? htmlspecialchars($w['slug']) : $w['id'] ?>" style="text-decoration: none; color: inherit;">
                     <div class="album-card position-relative overflow-hidden">
                         <img src="assets/uploads/weddings/<?= $w['cover_image'] ?>" class="img-fluid w-100 album-img" alt="<?= $w['title'] ?>">
                         <div class="album-overlay d-flex flex-column justify-content-center align-items-center">
