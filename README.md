@@ -38,7 +38,7 @@ Lumos Studio is a professional wedding photography studio based in Sri Lanka, fo
 
 1. Place the project folder into your local server's web directory (e.g., `c:\wamp64\www\lumosStudio`).
 2. Complete the database setup as described above.
-3. Access the website via your browser (e.g., `http://localhost/dinith`).
+3. Access the website via your browser (e.g., `http://localhost/lumosStudio`).
 4. You can manage the site's content by navigating to the admin panel at `http://localhost/lumosStudio/admin` and logging in.
 
 ## About the Photographer
