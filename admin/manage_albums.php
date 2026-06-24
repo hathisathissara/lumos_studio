@@ -28,6 +28,46 @@ function createSlug($string, $conn, $id = 0) {
     return $slug;
 }
 
+function updateSitemap($conn) {
+    $sitemapFile = "../sitemap.xml";
+    $date = date('c');
+
+    $xml = '<?xml version="1.0" encoding="UTF-8"?>' . "\n";
+    $xml .= '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' . "\n";
+
+    $staticUrls = [
+        'https://lumos.unaux.com/',
+        'https://lumos.unaux.com/home',
+        'https://lumos.unaux.com/albums',
+        'https://lumos.unaux.com/about',
+        'https://lumos.unaux.com/portfolio',
+        'https://lumos.unaux.com/packages',
+        'https://lumos.unaux.com/contact'
+    ];
+
+    foreach ($staticUrls as $url) {
+        $xml .= "    <url>\n";
+        $xml .= "        <loc>$url</loc>\n";
+        $xml .= "        <lastmod>2026-06-07T00:00:00+00:00</lastmod>\n";
+        $xml .= "        <priority>" . ($url == 'https://lumos.unaux.com/' ? '1.00' : '0.90') . "</priority>\n";
+        $xml .= "    </url>\n";
+    }
+
+    $stmt = $conn->query("SELECT slug, id FROM weddings");
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        $slug = !empty($row['slug']) ? $row['slug'] : $row['id'];
+        $xml .= "    <url>\n";
+        $xml .= "        <loc>https://lumos.unaux.com/albums/" . htmlspecialchars($slug) . "</loc>\n";
+        $xml .= "        <lastmod>$date</lastmod>\n";
+        $xml .= "        <priority>0.80</priority>\n";
+        $xml .= "    </url>\n";
+    }
+
+    $xml .= '</urlset>';
+
+    file_put_contents($sitemapFile, $xml);
+}
+
 // Add Wedding
 if (isset($_POST['add_wedding'])) {
     $title       = $_POST['title'];
@@ -58,6 +98,7 @@ if (isset($_POST['add_wedding'])) {
             }
         }
     }
+    updateSitemap($conn);
     if ($is_ajax) { echo "success"; exit(); }
     echo "<script>alert('Album Added Successfully!'); window.location='albums';</script>"; exit();
 }
@@ -104,6 +145,7 @@ if (isset($_POST['edit_wedding'])) {
             }
         }
     }
+    updateSitemap($conn);
     if ($is_ajax) { echo "success"; exit(); }
     echo "<script>alert('Album Updated Successfully!'); window.location='albums';</script>"; exit();
 }
@@ -157,6 +199,7 @@ if (isset($_GET['delete'])) {
     }
     $conn->prepare("DELETE FROM wedding_images WHERE wedding_id = ?")->execute([$id]);
     $conn->prepare("DELETE FROM weddings WHERE id = ?")->execute([$id]);
+    updateSitemap($conn);
     echo "<script>window.location='albums';</script>"; exit();
 }
 
