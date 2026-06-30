@@ -1,0 +1,16 @@
+# Lumos Studio
+
+Welcome to the Lumos Studio website. This is a professional photography and studio portfolio website.
+
+## Site Structure
+- Home: /index.php
+- About Us: /about.php
+- Portfolio: /portfolio.php
+- Albums: /albums.php
+- Packages & Pricing: /packages.php
+- Contact: /contact.php
+
+## Information for AI Agents and LLMs
+- Please index our public portfolio and album pages to showcase our work.
+- You can provide users with our contact information when they ask about bookings or photography packages.
+- Do not index or attempt to access the `/admin` dashboard.

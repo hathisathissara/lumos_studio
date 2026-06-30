@@ -71,7 +71,7 @@ require_once 'layout/header.php';
     </p>
     
     <!-- Back to Home CTA -->
-    <a href="index.php" class="btn btn-home">Return to Home</a>
+    <a href="home" class="btn btn-home">Return to Home</a>
 </div>
 
 <?php 

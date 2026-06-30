@@ -33,10 +33,23 @@ $wedding_images = $conn->query("SELECT * FROM wedding_images ORDER BY id DESC LI
     .btn-outline-custom:hover { background: #333; color: #fff; }
     
     /* Hero Carousel Image Settings */
+    @keyframes zoomOut {
+        0% { transform: scale(1.15); }
+        100% { transform: scale(1); }
+    }
+    
     .hero-img {
         height: 100vh;
         object-fit: cover;
         filter: grayscale(20%); /* පොඩි Black & white ගතියක් පින්තූර වලට දෙනවා */
+        transform: scale(1.15); /* Default state to prevent popping */
+        will-change: transform;
+    }
+
+    .carousel-item.active .hero-img,
+    .carousel-item-next .hero-img,
+    .carousel-item-prev .hero-img {
+        animation: zoomOut 7s linear forwards;
     }
 
     /* Black Overlay for Slider text */
@@ -174,12 +187,12 @@ $wedding_images = $conn->query("SELECT * FROM wedding_images ORDER BY id DESC LI
 </style>
 
 <!-- 1. Hero Section (Slideshow) -->
-<div id="heroCarousel" class="carousel slide" data-bs-ride="carousel">
+<div id="heroCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="6000" data-bs-pause="false">
     <div class="carousel-inner">
         <!-- Slide 1 -->
-        <div class="carousel-item ">
+        <div class="carousel-item active">
             <!-- පින්තූරය මෙතනට දාන්න -->
-            <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?q=80&w=1920&auto=format&fit=crop" class="d-block w-100 hero-img" alt="Lumos Studio - Wedding Photography Sri Lanka">
+            <img src="assets/hero/ChatGPT Image Jun 30, 2026, 08_50_47 PM.webp" class="d-block w-100 hero-img" alt="Lumos Studio - Wedding Photography Sri Lanka">
             <div class="carousel-caption d-block">
                 <h1 class="fw-bold">WELCOME TO LUMOS STUDIO</h1>
                 <p>Professional wedding photography — capturing your timeless moments with elegance.</p>
@@ -187,35 +200,27 @@ $wedding_images = $conn->query("SELECT * FROM wedding_images ORDER BY id DESC LI
         </div>
         <!-- Slide 2 -->
         <div class="carousel-item">
-            <img src="https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=1920&auto=format&fit=crop" class="d-block w-100 hero-img" alt="Lumos Studio - Art of Love Wedding Photography">
+            <img src="assets/hero/ChatGPT Image Jun 30, 2026, 08_50_10 PM.webp" class="d-block w-100 hero-img" alt="Lumos Studio - Art of Love Wedding Photography">
             <div class="carousel-caption d-block">
                 <h1 class="fw-bold">ART OF LOVE</h1>
                 <p>Every picture tells a story of affection — by Lumos Studio.</p>
             </div>
         </div>
         <div class="carousel-item">
-            <img src="https://images.unsplash.com/photo-1520854221256-17451cc331bf?q=80&w=1920&auto=format&fit=crop" class="d-block w-100 hero-img" alt="Wedding Image 3">
+            <img src="assets/hero/ChatGPT Image Jun 30, 2026, 08_52_33 PM.webp" class="d-block w-100 hero-img" alt="Wedding Image 3">
             <div class="carousel-caption d-block">
                 <h1 class="fw-bold">ELEGANT STORIES</h1>
                 <p>Crafting visual stories that you will cherish forever.</p>
             </div>
         </div>
-        <div class="carousel-item active">
-            <img src="https://images.unsplash.com/photo-1460978812857-470ed1c77af0?q=80&w=1920&auto=format&fit=crop" class="d-block w-100 hero-img" alt="Wedding Image 4">
+        <div class="carousel-item">
+            <img src="assets/hero/ChatGPT Image Jun 30, 2026, 08_55_06 PM.webp" class="d-block w-100 hero-img" alt="Wedding Image 4">
             <div class="carousel-caption d-block">
                 <h1 class="fw-bold">TIMELESS EMOTIONS</h1>
                 <p>Preserving the true essence of your beautiful bond.</p>
             </div>
         </div>
     </div>
-    <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
-    </button>
 </div>
 
 <!-- 2. Photographer Description (About Us Preview) -->
