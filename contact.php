@@ -192,7 +192,7 @@ if (isset($_GET['package'])) {
             
             <div class="mb-4">
                 <h6 class="text-uppercase small fw-bold">Office Address</h6>
-                <p class="text-muted">26 mile post,Bubula,kuruvithanna,Mahiyanganaya,Sri Lanka</p>
+                <p class="text-muted">26 mile post <br>Bubula,kuruvithanna<br>Mahiyanganaya<br>Sri Lanka</p>
             </div>
 
             <div class="mb-4">
