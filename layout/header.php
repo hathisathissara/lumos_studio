@@ -78,6 +78,9 @@ if (!isset($page_og_image))    $page_og_image    = "https://lumos.unaux.com/asse
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="shortcut icon" href="assets/lumos.jpg" type="image/x-icon">
     <style>
+        html {
+            scroll-behavior: smooth;
+        }
         @media (max-width: 991.98px) {
             .navbar-collapse {
                 background-color: rgba(255, 255, 255, 0.95);

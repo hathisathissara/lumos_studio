@@ -104,10 +104,57 @@ if (isset($_GET['package'])) {
     .social-links a:hover {
         color: #888;
     }
+
+    /* Page Hero Section */
+    .page-hero {
+        position: relative;
+        height: 100vh;
+        min-height: 400px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        margin-top: 0;
+    }
+    .page-hero img.hero-bg-img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        filter: grayscale(20%) brightness(60%);
+        z-index: -1;
+    }
+    .page-hero .hero-overlay {
+        text-align: center;
+        color: #fff;
+        padding: 0 20px;
+    }
+    .hero-page-title {
+        font-family: 'Times New Roman', serif;
+        font-weight: 300;
+        letter-spacing: 5px;
+        text-transform: uppercase;
+        margin: 0;
+        font-size: 2.5rem;
+    }
+    @media (max-width: 767.98px) {
+        .hero-page-title {
+            font-size: 1.8rem;
+        }
+    }
 </style>
 
-<div class="container pb-5" style="padding-top: 140px;">
-    <h1 class="page-title">CONTACT US</h1>
+<!-- Hero Section -->
+<div class="page-hero">
+    <img src="https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?q=80&w=1920&auto=format&fit=crop" class="hero-bg-img" alt="Contact Lumos Studio">
+    <div class="hero-overlay">
+        <h1 class="hero-page-title">CONTACT US</h1>
+    </div>
+</div>
+
+<div class="container pb-5" style="padding-top: 60px;">
     <p class="text-center text-muted mb-2" style="letter-spacing: 2px; font-size: 0.75rem; text-transform: uppercase;">Lumos Studio &mdash; Wedding Photography Sri Lanka</p>
     <p class="text-center text-muted mb-5" style="letter-spacing: 1px; font-weight: 300;">Let's discuss and craft your beautiful story together.</p>
 

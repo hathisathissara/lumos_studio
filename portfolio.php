@@ -122,10 +122,57 @@ $portfolio = $stmt->fetchAll();
     @media (max-width: 576px) {
         .portfolio-grid { column-count: 1; }
     }
+
+    /* Page Hero Section */
+    .page-hero {
+        position: relative;
+        height: 100vh;
+        min-height: 400px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        margin-top: 0;
+    }
+    .page-hero img.hero-bg-img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        filter: grayscale(20%) brightness(60%);
+        z-index: -1;
+    }
+    .page-hero .hero-overlay {
+        text-align: center;
+        color: #fff;
+        padding: 0 20px;
+    }
+    .hero-page-title {
+        font-family: 'Times New Roman', serif;
+        font-weight: 300;
+        letter-spacing: 5px;
+        text-transform: uppercase;
+        margin: 0;
+        font-size: 2.5rem;
+    }
+    @media (max-width: 767.98px) {
+        .hero-page-title {
+            font-size: 1.8rem;
+        }
+    }
 </style>
 
-<div class="container pb-5" style="padding-top: 140px;">
-    <h1 class="page-title">PORTFOLIO<br><small style="font-size:0.5em; letter-spacing:3px; opacity:0.6;">Lumos Studio</small></h1>
+<!-- Hero Section -->
+<div class="page-hero">
+    <img src="https://images.unsplash.com/photo-1606800052052-a08af7148866?q=80&w=1920&auto=format&fit=crop" class="hero-bg-img" alt="Portfolio Lumos Studio">
+    <div class="hero-overlay">
+        <h1 class="hero-page-title">PORTFOLIO<br><small style="font-size:0.5em; letter-spacing:3px; opacity:0.8;">Lumos Studio</small></h1>
+    </div>
+</div>
+
+<div class="container pb-5" style="padding-top: 60px;">
     
     <!-- Filter Buttons (පිටුව reload නොවී වැඩ කරන filter එක) -->
     <div class="filter-container">
