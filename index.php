@@ -339,10 +339,6 @@ $wedding_images = $conn->query("SELECT * FROM wedding_images ORDER BY id DESC LI
                 </div>
                 <?php endforeach; ?>
             </div>
-            
-            <!-- Navigation Arrows -->
-            <div class="swiper-button-next" style="color: rgba(255, 255, 255, 0.8); text-shadow: 0 0 5px rgba(0,0,0,0.5);"></div>
-            <div class="swiper-button-prev" style="color: rgba(255, 255, 255, 0.8); text-shadow: 0 0 5px rgba(0,0,0,0.5);"></div>
         </div>
     </div>
 </section>
