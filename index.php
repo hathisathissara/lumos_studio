@@ -192,7 +192,7 @@ $wedding_images = $conn->query("SELECT * FROM wedding_images ORDER BY id DESC LI
         <!-- Slide 1 -->
         <div class="carousel-item active">
             <!-- පින්තූරය මෙතනට දාන්න -->
-            <img src="assets/hero/ChatGPT Image Jun 30, 2026, 08_50_47 PM.webp" class="d-block w-100 hero-img" alt="Lumos Studio - Wedding Photography Sri Lanka">
+            <img src="assets/hero/hero1.webp" class="d-block w-100 hero-img" alt="Lumos Studio - Wedding Photography Sri Lanka">
             <div class="carousel-caption d-block">
                 <h1 class="fw-bold">WELCOME TO LUMOS STUDIO</h1>
                 <p>Professional wedding photography — capturing your timeless moments with elegance.</p>
@@ -200,21 +200,21 @@ $wedding_images = $conn->query("SELECT * FROM wedding_images ORDER BY id DESC LI
         </div>
         <!-- Slide 2 -->
         <div class="carousel-item">
-            <img src="assets/hero/ChatGPT Image Jun 30, 2026, 08_50_10 PM.webp" class="d-block w-100 hero-img" alt="Lumos Studio - Art of Love Wedding Photography">
+            <img src="assets/hero/hero2.webp" class="d-block w-100 hero-img" alt="Lumos Studio - Art of Love Wedding Photography">
             <div class="carousel-caption d-block">
                 <h1 class="fw-bold">ART OF LOVE</h1>
                 <p>Every picture tells a story of affection — by Lumos Studio.</p>
             </div>
         </div>
         <div class="carousel-item">
-            <img src="assets/hero/ChatGPT Image Jun 30, 2026, 08_52_33 PM.webp" class="d-block w-100 hero-img" alt="Wedding Image 3">
+            <img src="assets/hero/hero3.webp" class="d-block w-100 hero-img" alt="Wedding Image 3">
             <div class="carousel-caption d-block">
                 <h1 class="fw-bold">ELEGANT STORIES</h1>
                 <p>Crafting visual stories that you will cherish forever.</p>
             </div>
         </div>
         <div class="carousel-item">
-            <img src="assets/hero/ChatGPT Image Jun 30, 2026, 08_55_06 PM.webp" class="d-block w-100 hero-img" alt="Wedding Image 4">
+            <img src="assets/hero/hero4.webp" class="d-block w-100 hero-img" alt="Wedding Image 4">
             <div class="carousel-caption d-block">
                 <h1 class="fw-bold">TIMELESS EMOTIONS</h1>
                 <p>Preserving the true essence of your beautiful bond.</p>
