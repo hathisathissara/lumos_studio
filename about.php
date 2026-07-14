@@ -110,7 +110,7 @@ require_once 'layout/header.php';
 
 <!-- Hero Section -->
 <div class="page-hero">
-    <img src="https://images.unsplash.com/photo-1600270237614-d20aef1c8b14?w=600&auto=format&fit=crop" class="hero-bg-img" alt="About Lumos Studio">
+    <img src="assets/about/hero.webp" class="hero-bg-img" alt="About Lumos Studio">
     <div class="hero-overlay">
         <h1 class="hero-page-title">ABOUT LUMOS STUDIO</h1>
     </div>
